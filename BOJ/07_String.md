@@ -94,3 +94,68 @@
     }
     ~~~
     if let else 대신 ?? 사용하여 result.append 중복코드 제거하고 한줄로 간단하게 함
+
+<br>
+
+## #04 [2675 문자열 반복](https://www.acmicpc.net/problem/2675)
+* 문제
+    
+    문자열 S를 입력받은 후에, 각 문자를 R번 반복해 새 문자열 P를 만든 후 출력하는 프로그램을 작성하시오. 즉, 첫 번째 문자를 R번 반복하고, 두 번째 문자를 R번 반복하는 식으로 P를 만들면 된다. S에는 QR Code "alphanumeric" 문자만 들어있다.
+
+    QR Code "alphanumeric" 문자는 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\$%*+-./: 이다.
+
+* 입력
+
+    첫째 줄에 테스트 케이스의 개수 T(1 ≤ T ≤ 1,000)가 주어진다. 각 테스트 케이스는 반복 횟수 R(1 ≤ R ≤ 8), 문자열 S가 공백으로 구분되어 주어진다. S의 길이는 적어도 1이며, 20글자를 넘지 않는다. 
+
+* 출력
+
+    각 테스트 케이스에 대해 P를 출력한다.
+
+* 제출
+    ~~~swift
+    let t = Int(readLine()!)!
+
+    for _ in 1...t {
+        let input = readLine()!.split(separator: " ").map { String($0) }
+        let r = Int(input[0])!
+        let s = input[1].map { String($0) }
+        var result = ""
+
+        s.forEach {
+            for _ in 1...r {
+                result.append($0)
+            }
+        }
+        print(result)
+    }
+    ~~~
+
+* 다른 사람
+    ~~~swift
+    for _ in 0..<Int(readLine()!)! {
+        let input = readLine()!.split(separator: " ").map { String($0) }
+        let r = Int(input[0])!, str = input[1].map { String($0) }
+        for s in str {
+            print(String(repeating: s, count: r), terminator: "")
+        }
+        print()    
+    }
+    ~~~
+    => repeating 사용함. terminator: ""로 해서 줄바꿈 안되고 한줄에 출력할 수 있고, print()를 해줘서 줄바꿈함.
+    ~~~swift
+    for s in "ABC" {
+        print(String(repeating: s, count: 3), terminator: "")
+    }
+    // => 
+    //AAABBBCCC
+
+    for s in "ABC" {
+        print(s)
+    }
+    // =>
+    //A
+    //B
+    //C
+
+    ~~~
