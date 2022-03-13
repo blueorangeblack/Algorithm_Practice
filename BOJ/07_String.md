@@ -159,3 +159,65 @@
     //C
 
     ~~~
+
+<br>
+
+## #05 [1157 단어 공부](https://www.acmicpc.net/problem/1157)
+* 문제
+
+    알파벳 대소문자로 된 단어가 주어지면, 이 단어에서 가장 많이 사용된 알파벳이 무엇인지 알아내는 프로그램을 작성하시오. 단, 대문자와 소문자를 구분하지 않는다.
+
+* 입력
+
+    첫째 줄에 알파벳 대소문자로 이루어진 단어가 주어진다. 주어지는 단어의 길이는 1,000,000을 넘지 않는다.
+
+* 출력
+
+    첫째 줄에 이 단어에서 가장 많이 사용된 알파벳을 대문자로 출력한다. 단, 가장 많이 사용된 알파벳이 여러 개 존재하는 경우에는 ?를 출력한다.
+
+* 제출
+    ~~~swift
+    let s = readLine()!.map { $0.uppercased() }
+    var dict = [String: Int]()
+
+    s.forEach {
+        if dict[$0] == nil {
+            dict[$0] = 1
+        } else {
+            dict[$0]! += 1
+        }
+    }
+
+    var alphabet = ""
+    var max = 0
+    var same = false
+    dict.forEach {
+        if $0.value == max {
+            same = true
+        } else if $0.value > max {
+            alphabet = $0.key
+            max = $0.value
+            same = false
+        }
+    }
+
+    if same {
+        print("?")
+    } else {
+        print(alphabet)
+    }
+    ~~~
+
+* 다른 사람
+    ~~~swift
+    var result = [String]()
+
+    for key in dict.keys {
+        if dict[key] == dict.values.max() {
+            result.append(key)
+        }
+    }
+
+    print(result.count > 1 ? "?" : result[0])
+    ~~~
+    => 두번째 단계에서 `dict.values.max()`로 가장 큰 수를 알아내고 각각을 비교해서 String array로 만들고 count가 1이 아니면 ?를 출력하도록 함. 코드도 더 간단하고 속도도 조금 더 빠름.
