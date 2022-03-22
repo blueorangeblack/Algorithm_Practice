@@ -300,3 +300,59 @@
     }
     ~~~
     => 먼저 5로 나누어 떨어지는지 확인 후 3씩 줄여가면서 total을 계산. 메모리와 시간은 같음.
+
+<br>
+
+## #08 [10757 큰 수 A+B](https://www.acmicpc.net/problem/10757)
+* 문제
+
+    두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
+
+* 입력
+
+    첫째 줄에 A와 B가 주어진다. (0 < A,B < 1010000)
+
+* 출력
+
+    첫째 줄에 A+B를 출력한다.
+
+* 제출
+    ~~~swift
+    let input = readLine()!.split(separator: " ").map { String($0) }
+    var a = input[0]
+    var b = input[1]
+    var sum = 0
+    var array = [Int]()
+
+    func cal() {
+        var aa = 0
+        var bb = 0
+        if !a.isEmpty {
+            aa = Int(String(a.removeLast()))!
+        }
+
+        if !b.isEmpty {
+            bb = Int(String(b.removeLast()))!
+        }
+        
+        sum += aa + bb
+        if sum < 10 {
+            array.append(sum)
+            sum = 0
+        } else {
+            array.append(sum - 10)
+            sum = 1
+        }
+        
+        if a.isEmpty && b.isEmpty {
+            if sum == 1 {
+                array.append(sum)
+            }
+            print(array.reversed().map { String($0) }.joined())
+        } else {
+            cal() //재귀함수
+        }
+    }
+
+    cal()
+    ~~~
