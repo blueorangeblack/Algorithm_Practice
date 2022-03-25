@@ -156,3 +156,80 @@
         }
     }
     ~~~
+
+## #04 [1929 소수 구하기](https://www.acmicpc.net/problem/1929)
+* 문제
+    M이상 N이하의 소수를 모두 출력하는 프로그램을 작성하시오.
+
+* 입력
+
+    첫째 줄에 자연수 M과 N이 빈 칸을 사이에 두고 주어진다. (1 ≤ M ≤ N ≤ 1,000,000) M이상 N이하의 소수가 하나 이상 있는 입력만 주어진다.
+
+* 출력
+
+    한 줄에 하나씩, 증가하는 순서대로 소수를 출력한다.
+
+* 제출
+    ~~~swift
+    import Foundation
+
+    let input = readLine()!.split(separator: " ").map { Int($0)! }
+    var array = (input[0]...input[1]).map { $0 }
+
+    func isPrime(num: Int) -> Bool {
+        var result = true
+        if num == 1 {
+            return false
+        }
+
+        if num == 2 || num == 3 {
+            return true
+        }
+
+        for i in 2...Int(sqrt(Double(num))) {
+            if num % i == 0 {
+                result = false
+                break
+            }
+        }
+
+        return result
+    }
+
+    array.forEach {
+        if isPrime(num: $0) {
+            print($0)
+        }
+    }
+    ~~~
+
+* 다른 풀이
+    ~~~swift
+    import Foundation
+
+    let input = readLine()!.split(separator: " ").map { Int($0)! }
+    let M = input[0]
+    let N = input[1]
+
+    var arr = [Int](repeating: 0, count: N + 1)
+
+    for i in 2...N {
+        arr[i] = i
+    }
+
+    for i in 2...N {
+        if arr[i] == 0 {
+            continue
+        }
+        for j in stride(from: 2 * i, through: N, by: i) {
+            arr[j] = 0
+        }
+    }
+
+    for i in M...N {
+        if arr[i] != 0 {
+            print(arr[i])
+        }
+    }
+    ~~~
+    => 에라토스테네스의 체를 사용하여 풀면 속도가 훨씬 빠름.
